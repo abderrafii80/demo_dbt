@@ -1,0 +1,21 @@
+version: 2
+
+sources:
+  - name: dbt_schema
+    tables:
+      - name: clients
+
+models:
+  - name: stg_clients
+    description: "Nettoyage des données clients"
+    columns:
+      - name: id
+        tests: [not_null, unique]
+      - name: email
+        tests: [not_null]
+
+  - name: int_clients_stats
+    description: "Stats sur les noms clients"
+
+  - name: final_clients_report
+    description: "Rapport final sur les clients"
