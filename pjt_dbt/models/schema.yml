@@ -1,21 +1,98 @@
 version: 2
 
 sources:
-  - name: dbt_schema
+  - name: dbt_schema  # Nom de la source de données
     tables:
       - name: clients
+        description: "Table contenant les informations sur les clients"
+        columns:
+          - name: id
+            description: "Identifiant unique du client"
+            tests: 
+              - not_null
+              - unique
+          - name: email
+            description: "Adresse email du client"
+            tests:
+              - not_null
+          - name: age
+            description: "Âge du client"
+            tests:
+              - not_null
+          - name: statut
+            description: "Statut du client"
+            tests:
+              - not_null
+
+      - name: ventes
+        description: "Table contenant les ventes réalisées"
+        columns:
+          - name: id_vente
+            description: "Identifiant unique de la vente"
+            tests:
+              - not_null
+              - unique
+          - name: montant_vente
+            description: "Montant de la vente"
+            tests:
+              - not_null
+          - name: date_vente
+            description: "Date à laquelle la vente a eu lieu"
+            tests:
+              - not_null
+          - name: id_client
+            description: "Référence au client ayant réalisé l'achat"
+            tests:
+              - not_null
 
 models:
   - name: stg_clients
-    description: "Nettoyage des données clients"
+    description: "Modèle de nettoyage des données clients"
     columns:
       - name: id
-        tests: [not_null, unique]
+        description: "Identifiant unique du client"
+        tests:
+          - not_null
+          - unique
       - name: email
-        tests: [not_null]
+        description: "Adresse email du client"
+        tests:
+          - not_null
+      - name: age
+        description: "Âge du client"
+        tests:
+          - not_null
+      # - name: statut
+      #   description: "Statut du client"
+      #   tests:
+      #     - not_null
 
   - name: int_clients_stats
-    description: "Stats sur les noms clients"
-
+    description: "Modèle pour générer des statistiques sur les clients"
+  
   - name: final_clients_report
-    description: "Rapport final sur les clients"
+    description: "Modèle de rapport final sur les clients"
+
+  - name: kpi_nb_total_clients
+    description: "Modèle pour calculer le nombre total de clients"
+
+  - name: ventes_clients
+    description: "Modèle pour lier les ventes aux clients"
+    columns:
+      - name: id_vente
+        description: "Identifiant unique de la vente"
+        tests:
+          - not_null
+          - unique
+      - name: montant_vente
+        description: "Montant de la vente"
+        tests:
+          - not_null
+      - name: date_vente
+        description: "Date de la vente"
+        tests:
+          - not_null
+      - name: id_client
+        description: "Référence au client"
+        tests:
+          - not_null

@@ -34,6 +34,8 @@ models:
     # Config indicated by + and applies to all files under models/example/
     example:
       +materialized: view
+    kpi:
+      +materialized: view
 
-semantic_layer:
-  enabled: true    
+# semantic_layer:
+#   enabled: true    

@@ -3,5 +3,7 @@
 SELECT 
     id,
     name,
-    email
+    email,
+    age,
+    statut
 FROM dbt_schema.customers
